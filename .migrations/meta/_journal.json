@@ -15,6 +15,20 @@
       "when": 1729366648373,
       "tag": "0001_noisy_blonde_phantom",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1731869922738,
+      "tag": "0002_round_changeling",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1731872823352,
+      "tag": "0003_nifty_lilith",
+      "breakpoints": true
     }
   ]
 }
