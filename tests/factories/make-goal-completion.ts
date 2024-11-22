@@ -4,7 +4,7 @@ import { db } from '../../src/db'
 import { goalCompletions } from '../../src/db/schema'
 import type { InferSelectModel } from 'drizzle-orm'
 
-export async function makeGoal(
+export async function makeGoalCompletion(
   override: Partial<InferSelectModel<typeof goalCompletions>> &
     Pick<InferSelectModel<typeof goalCompletions>, 'goalId'>
 ) {
