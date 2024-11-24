@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest'
 import { makeUser } from '../../tests/factories/make-user'
 import { makeGoal } from '../../tests/factories/make-goal'
 import { makeGoalCompletion } from '../../tests/factories/make-goal-completion'
-import { getWeekPendingGoals } from './get-week-pending-goals'
 import { getWeekSummary } from './get-week-summary'
 import dayjs from 'dayjs'
 
@@ -18,16 +17,19 @@ describe('get week summary', () => {
       userId: user.id,
       title: 'meditar',
       desiredWeeklyFrequency: 3,
+      createdAt: weekStartsAt,
     })
     const goal2 = await makeGoal({
       userId: user.id,
       title: 'correr',
       desiredWeeklyFrequency: 2,
+      createdAt: weekStartsAt,
     })
     const goal3 = await makeGoal({
       userId: user.id,
       title: 'Ler docs',
       desiredWeeklyFrequency: 4,
+      createdAt: weekStartsAt,
     })
 
     await makeGoalCompletion({
