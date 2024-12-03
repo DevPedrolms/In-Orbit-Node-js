@@ -1,0 +1,1 @@
+ALTER TABLE "Users" ADD COLUMN "experience" integer DEFAULT 0 NOT NULL;
