@@ -17,6 +17,8 @@ import { env } from '../env'
 import { fastifyJwt } from '@fastify/jwt'
 import { getProfileRoute } from './routes/get-profile'
 import { getUserExperienceAndLevelRoute } from './routes/get-user-experience-and-level'
+import { writeFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -60,3 +62,15 @@ app
   .then(() => {
     console.log('HTTP server running!')
   })
+
+if (env.NODE_ENV === 'development') {
+  const specFIle = resolve(__dirname, '../../swagger.json')
+
+  app.ready().then(() => {
+    const spec = JSON.stringify(app.swagger(), null, 2)
+
+    writeFile(specFIle, spec).then(() => {
+      console.log('Swagger spec generated!')
+    })
+  })
+}

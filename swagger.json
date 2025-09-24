@@ -1,0 +1,292 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "In.Orbit",
+    "version": "1.0.0"
+  },
+  "components": {
+    "schemas": {}
+  },
+  "paths": {
+    "/goals": {
+      "post": {
+        "operationId": "createGoal",
+        "tags": [
+          "goals"
+        ],
+        "description": "create a goal",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "desiredWeeklyFrequency": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 7
+                  }
+                },
+                "required": [
+                  "title",
+                  "desiredWeeklyFrequency"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/completions": {
+      "post": {
+        "operationId": "createCompletion",
+        "tags": [
+          "goals"
+        ],
+        "description": "complete a goal",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "goalId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "goalId"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "enum": [
+                    "null"
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pending-goals": {
+      "get": {
+        "operationId": "getPendingGoals",
+        "tags": [
+          "goals"
+        ],
+        "description": "Get pending goals",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pendingGoals": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "desiredWeeklyFrequency": {
+                            "type": "number"
+                          },
+                          "completionCount": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "desiredWeeklyFrequency",
+                          "completionCount"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "pendingGoals"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/summary": {
+      "get": {
+        "operationId": "getWeekSummary",
+        "tags": [
+          "goals"
+        ],
+        "description": "Get week summary",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "default": {}
+            },
+            "in": "query",
+            "name": "weekStartsAt",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "summary": {
+                      "type": "object",
+                      "properties": {
+                        "completed": {
+                          "type": "number"
+                        },
+                        "total": {
+                          "type": "number"
+                        },
+                        "goalsPerDay": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "title": {
+                                  "type": "string"
+                                },
+                                "completedAt": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "title",
+                                "completedAt"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "completed",
+                        "total",
+                        "goalsPerDay"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "summary"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/github": {
+      "post": {
+        "operationId": "authenticateFromGithub",
+        "tags": [
+          "auth"
+        ],
+        "description": "authenticate from github",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "code"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/profile": {
+      "post": {
+        "operationId": "getProfile",
+        "tags": [
+          "auth"
+        ],
+        "description": "Get authenticated user profile",
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    },
+    "/profile/gamification": {
+      "post": {
+        "operationId": "getUserExperienceAndLevel",
+        "tags": [
+          "auth",
+          "gamification"
+        ],
+        "description": "Get user experience and level",
+        "responses": {
+          "200": {
+            "description": "Default Response"
+          }
+        }
+      }
+    }
+  }
+}
