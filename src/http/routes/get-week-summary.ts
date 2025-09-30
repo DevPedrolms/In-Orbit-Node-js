@@ -23,7 +23,7 @@ export const getWeekSummaryRoute: FastifyPluginAsyncZod = async app => {
           200: z.object({
             summary: z.object({
               completed: z.number(),
-              total: z.number(),
+              total: z.number().nullable(),
               goalsPerDay: z.record(
                 z.string(),
                 z.array(
@@ -33,7 +33,7 @@ export const getWeekSummaryRoute: FastifyPluginAsyncZod = async app => {
                     completedAt: z.string(),
                   })
                 )
-              ),
+              ).nullable(),
             }),
           }),
         },
